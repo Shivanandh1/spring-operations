@@ -1,9 +1,8 @@
 package org.example;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDB {
 
@@ -31,7 +30,34 @@ public class ProductDB {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
+
+    List<Product> getAll(){
+          List<Product> productList=new ArrayList<>();
+
+          String sql="select name,type,place,warranty from product";
+
+        try {
+            PreparedStatement preparedStatement=connection.prepareStatement(sql);
+            ResultSet resultSet= preparedStatement.executeQuery();
+          while(resultSet.next()){
+              Product product=new Product();
+
+              product.setName(resultSet.getString(1));
+              product.setType(resultSet.getString(2));
+              product.setPlace(resultSet.getString(3));
+              product.setWarranty(resultSet.getShort(4));
+
+              productList.add(product);
+          }
+
+    } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return productList;
+    }
+
+
 }

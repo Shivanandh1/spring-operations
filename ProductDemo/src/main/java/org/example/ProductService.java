@@ -18,7 +18,7 @@ public class ProductService {
 
     public List<Product> getAllProducts() {
 
-        return productList;
+        return dataBase.getAll();
     }
 
     public Product getProduct(String name) {

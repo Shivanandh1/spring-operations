@@ -27,5 +27,16 @@ public class Main {
 //        }
 //          Product p= productService.getProduct("asus book");
 //        System.out.println(p);
+
+//        ProductDB productDB=new ProductDB();
+        ProductService service=new ProductService();
+        List<Product> productList= service.getAllProducts();
+
+        for(Product p: productList){
+            System.out.println(p);
+
+        }
+
+
     }
 }
