@@ -44,7 +44,6 @@ public class ProductServiceImpl implements ProductService {
         if(product.getType()!=null){
             productdb.setType(product.getType());
         }
-
             productdb.setWarranty(product.getWarranty());
 
         return dataBase.save(productdb);

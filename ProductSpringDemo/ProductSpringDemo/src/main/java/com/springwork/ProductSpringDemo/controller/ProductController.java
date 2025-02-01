@@ -2,7 +2,6 @@ package com.springwork.ProductSpringDemo.controller;
 
 import com.springwork.ProductSpringDemo.model.Product;
 import com.springwork.ProductSpringDemo.service.Impl.ProductServiceImpl;
-import com.springwork.ProductSpringDemo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

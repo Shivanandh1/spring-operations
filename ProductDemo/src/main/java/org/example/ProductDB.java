@@ -17,7 +17,7 @@ public class ProductDB {
    }
 
     public void save(Product product) {
-     String sql="insert into product (name,type,place,warranty) values(?,?,?,?)";
+     String sql="insert into products (name,type,place,warranty) values(?,?,?,?)";
         try {
             PreparedStatement preparedStatement=connection.
                     prepareStatement(sql);
@@ -35,7 +35,7 @@ public class ProductDB {
     List<Product> getAll(){
           List<Product> productList=new ArrayList<>();
 
-          String sql="select name,type,place,warranty from product";
+          String sql="select name,type,place,warranty from products";
 
         try {
             PreparedStatement preparedStatement=connection.prepareStatement(sql);

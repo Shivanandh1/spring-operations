@@ -4,7 +4,6 @@ import com.quizapplication.QuizApp.Dao.QuestionDao;
 import com.quizapplication.QuizApp.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +38,15 @@ public class QuestionService {
     public String addQuestion(Question question){
         questionDao.save(question);
         return "success";
+    }
+
+    public String removeQuestion(int id) {
+        questionDao.deleteById(id);
+        return "deleted all questions";
+    }
+
+    public String removeQuestions() {
+        questionDao.deleteAll();
+        return "success deleted";
     }
 }
