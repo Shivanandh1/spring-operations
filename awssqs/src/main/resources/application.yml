@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    aws:
+      region:
+        static: us-east-1
+      credentials:
+        access-key: AKIAXZEFICKQJSIUUTFR
+        secret-key: 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
+      sqs:
+        endpoint: https://sqs.us-east-1.amazonaws.com/535002878624/demoQueue

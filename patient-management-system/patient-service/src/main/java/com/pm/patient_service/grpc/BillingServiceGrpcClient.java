@@ -1,0 +1,53 @@
+package com.pm.patient_service.grpc;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import billing.BillingRequest;
+import billing.BillingResponse;
+import billing.BillingServiceGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+
+@Service
+public class BillingServiceGrpcClient {
+
+    private static final Logger log = LoggerFactory.getLogger(BillingServiceGrpcClient.class);
+
+    private final BillingServiceGrpc.BillingServiceBlockingStub billingServiceBlockingStub;
+
+    public BillingServiceGrpcClient(@Value("${billing.host:localhost}") String serverAddress,
+                                    @Value("${billing.port:9001}") int serverPort) {
+
+        log.info("connecting to billing service at {}:{}", serverAddress, serverPort);
+
+        ManagedChannel channel= ManagedChannelBuilder.forAddress(serverAddress, serverPort)
+                .usePlaintext()
+                .build();
+
+        billingServiceBlockingStub=BillingServiceGrpc.newBlockingStub(channel);
+
+    }
+
+    public BillingResponse createBillingAccount(String patientId,String name,String email) {
+        log.info("Creating billing account for patientId: {}, name: {}, email: {}", patientId, name, email);
+
+        try {
+            BillingRequest request=BillingRequest.newBuilder()
+                    .setPatientId(patientId)
+                    .setName(name)
+                    .setEmail(email)
+                    .build();
+
+            BillingResponse response=billingServiceBlockingStub.createBillingAccount(request);
+
+            log.info("Received billing response: {}", response.toString());
+            return response;
+        } catch (Exception e) {
+            log.error("Error creating billing account: {}", e.getMessage(), e);
+            throw new RuntimeException("Failed to create billing account: " + e.getMessage(), e);
+        }
+    }
+}

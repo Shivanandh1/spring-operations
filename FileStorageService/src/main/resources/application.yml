@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: s3-upload-app
+
+cloud:
+  aws:
+    region: ap-south-1
+
+application:
+  bucket:
+    name: java-example-storage
