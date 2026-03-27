@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Anagram {
     public static void main(String[] args) {
-        System.out.println(isAnagram("silent","listen"));
+        System.out.println(isAnagram("silenst","listen"));
     }
 
     private static boolean isAnagram(String s, String s1) {
