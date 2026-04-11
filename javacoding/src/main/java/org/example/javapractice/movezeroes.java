@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class movezeroes {
 
     public static void main(String[] args) {
+
         movezeroess(new int[]{0,1,0,3,10});
     }
 

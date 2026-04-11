@@ -11,7 +11,7 @@ public class moreQuestions {
         List<Integer> integers= Arrays.asList(3,4,5,50,54,57,58);
 
         System.out.println(integers.stream().filter(n->n > 50 && n%2==0).findFirst().orElse(null));
-        System.out.println(integers.stream().sorted(Comparator.comparing(Integer::intValue).reversed()).findFirst().orElse(null));
+        System.out.println(integers.stream().sorted(Comparator.reverseOrder()).findFirst().orElse(null));
         
 
 

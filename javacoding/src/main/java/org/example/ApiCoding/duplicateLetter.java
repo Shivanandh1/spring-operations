@@ -38,7 +38,7 @@ public class duplicateLetter {
              list1.stream().sorted(Collections.reverseOrder()).forEach(System.out::println);
 
              List<Integer> list=Arrays.asList(2,3,5,6,4);
-                        list.stream().map(i->i*i*i).filter(i->i>50).forEach(System.out::println);
+                        list.stream().map(i->i*i*i).filter(i->i>50).sorted().forEach(System.out::println);
        System.out.println("------");
 
 

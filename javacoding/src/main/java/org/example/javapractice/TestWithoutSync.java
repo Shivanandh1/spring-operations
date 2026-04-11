@@ -1,6 +1,6 @@
 package org.example.javapractice;
 
-class Counter {
+class Counterr {
 
     int count = 0;
 
@@ -13,7 +13,7 @@ public class TestWithoutSync {
 
     public static void main(String[] args) throws InterruptedException {
 
-        Counter counter = new Counter();
+        Counterr counter = new Counterr();
 
         Runnable task = () -> {
             for (int i = 0; i < 1000; i++) {

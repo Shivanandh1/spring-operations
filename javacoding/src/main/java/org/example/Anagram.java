@@ -19,9 +19,6 @@ public class Anagram {
             freq2.put(charcterfreq1,freq2.getOrDefault(charcterfreq1,0)+1);
         }
 
-        if(freq.equals(freq2)){
-            return true;
-        }
-        return false;
+        return freq.equals(freq2);
     }
 }

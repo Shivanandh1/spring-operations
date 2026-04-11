@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ProductDemo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ProductDemo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ProductSpringDemo/ProductSpringDemo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/QuizApp/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Secureapp/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/javacoding/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/javacoding/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/joblisting/joblisting/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/question-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quiz-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-registry/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/springwork/src/main/java" charset="UTF-8" />
+  </component>
+</project>

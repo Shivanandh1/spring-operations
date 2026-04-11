@@ -11,7 +11,7 @@ public class optionalexample {
         Optional<String> optional2 = Optional.ofNullable(null);
         Optional<String> optional3 = Optional.empty();
 
-        System.out.println("value present"+optional.isPresent());
+        System.out.println("value present"+optional2.isPresent());
             optional.ifPresent(System.out::println);
 
             String result1= optional.orElse("default value");

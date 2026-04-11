@@ -3,12 +3,24 @@ package org.example;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class FirstNonRepeatingChracter {
 
     public static void main(String[] args) {
-        System.out.println(firstNonRepeatingCharacter("abacabad"));
+        System.out.println(firstNonRepeatingCharacter("beachhead"));
+        System.out.println(firstNonRepeatingCharacter1("swiss"));
     }
+
+    private static Character firstNonRepeatingCharacter1(String beachhead) {
+
+        Character repated=beachhead.chars().mapToObj(c->(char) c).collect(Collectors.groupingBy(Function.identity(),LinkedHashMap::new,Collectors.counting()))
+                .entrySet().stream().filter(n->n.getValue()==1).map(Map.Entry::getKey).findFirst().orElse(null);
+
+        return repated;
+    }
+
     public static Character firstNonRepeatingCharacter(String input) {
             if(input==null || input.isEmpty()){
                 return null;

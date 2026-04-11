@@ -25,18 +25,19 @@ public class findduplicates {
         System.out.println(employeeList.stream().sorted(Comparator.comparing((Employee e)->e.salary).reversed())
                 .limit(3).toList());
         employeeList.stream().filter(n->n.name.startsWith("A")).toList();
-        employeeList.stream().filter(e->"IT".equals(e.dept)).mapToDouble(e->e.salary).sum();
+        employeeList.stream().filter(e->"IT".equals(e.dept)).mapToDouble(Employee::getSalary).sum();
 
         employeeList.stream().collect(Collectors.partitioningBy(e->e.salary > 50_000));
-        employeeList.stream().collect(Collectors.groupingBy(employee -> employee.dept,Collectors.averagingDouble(value -> value.salary)))
+        employeeList.stream()
+                .collect(Collectors.groupingBy(employee -> employee.dept,Collectors.averagingDouble(value -> value.salary)))
                 .entrySet().stream().max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
                 .orElse(null);
 
-        employeeList.stream().sorted(Comparator.comparingDouble((Employee e)-> e.salary).reversed()).skip(1)
+        employeeList.stream().sorted(Comparator.comparingDouble(Employee::getSalary).reversed()).skip(1)
                 .findFirst().orElse(null);
 
-        employeeList.stream().sorted(Comparator.comparing((Employee employee) -> employee.dept)
-                .thenComparingDouble(value -> value.salary).reversed()).toList();
+        employeeList.stream().sorted(Comparator.comparing(Employee::getDept)
+                .thenComparingDouble(Employee::getSalary).reversed()).toList();
 
         employeeList.stream().collect(Collectors.toMap(e->e.name,e->e.salary));
 
@@ -68,9 +69,58 @@ public class findduplicates {
     }
      class Employee {
         int id;
-        String name;
+
+         public String getName() {
+             return name;
+         }
+
+         public void setName(String name) {
+             this.name = name;
+         }
+
+         public int getId() {
+             return id;
+         }
+
+         public void setId(int id) {
+             this.id = id;
+         }
+
+         public String getDept() {
+             return dept;
+         }
+
+         public void setDept(String dept) {
+             this.dept = dept;
+         }
+
+         public double getSalary() {
+             return salary;
+         }
+
+         public void setSalary(double salary) {
+             this.salary = salary;
+         }
+
+         String name;
         String dept;
         double salary;
-    }
+
+         @Override
+         public String toString() {
+             return "Employee{" +
+                     "id=" + id +
+                     ", name='" + name + '\'' +
+                     ", dept='" + dept + '\'' +
+                     ", salary=" + salary +
+                     '}';
+         }
+         public Employee(int id, String name, String dept, double salary) {
+             this.id = id;
+             this.name = name;
+             this.dept = dept;
+             this.salary = salary;
+         }
+     }
 
 }
