@@ -126,7 +126,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>6.1.11</version>
+            <version>6.1.14</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>
@@ -169,6 +169,11 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.15</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
         </dependency>
@@ -184,7 +189,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.13.0</version>
+<!--                    <version>3.13.0</version>-->
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>

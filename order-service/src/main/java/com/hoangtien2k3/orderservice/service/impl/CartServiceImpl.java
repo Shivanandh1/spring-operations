@@ -40,29 +40,26 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private final CallAPI callAPI;
 
-
     @Override
     public Mono<List<CartDto>> findAll() {
         log.info("CartDto List, service; fetch all carts");
 
         return Mono.fromSupplier(() -> cartRepository.findAll()
-                        .stream()
-                        .map(CartMappingHelper::map)
-                        .toList()
-                )
+                .stream()
+                .map(CartMappingHelper::map)
+                .toList())
                 .flatMap(cartDtos -> Flux.fromIterable(cartDtos)
-                        .flatMap(cartDto ->
-                                callAPI.receiverUserDto(cartDto.getUserDto().getId(), JwtTokenFilter.getTokenFromRequest())
-                                        .map(userDto -> {
-                                            cartDto.setUserDto(userDto);
-                                            return cartDto;
-                                        })
-                                        .onErrorResume(throwable -> {
-                                            log.error("Error fetching user info: {}", throwable.getMessage());
-                                            return Mono.just(cartDto);
-                                        })
-                        ).collectList()
-                );
+                        .flatMap(cartDto -> callAPI
+                                .receiverUserDto(cartDto.getUserDto().getId(), JwtTokenFilter.getTokenFromRequest())
+                                .map(userDto -> {
+                                    cartDto.setUserDto(userDto);
+                                    return cartDto;
+                                })
+                                .onErrorResume(throwable -> {
+                                    log.error("Error fetching user info: {}", throwable.getMessage());
+                                    return Mono.just(cartDto);
+                                }))
+                        .collectList());
     }
 
     @Override
@@ -72,36 +69,11 @@ public class CartServiceImpl implements CartService {
         Pageable pageable = PageRequest.of(page, size, sort);
 
         return Mono.fromSupplier(() -> cartRepository
-                        .findAll(pageable)
-                        .map(CartMappingHelper::map)
-                )
+                .findAll(pageable)
+                .map(CartMappingHelper::map))
                 .flatMap(cartDtos -> Flux.fromIterable(cartDtos)
-                        .flatMap(cartDto ->
-                                callAPI.receiverUserDto(cartDto.getUserDto().getId(), JwtTokenFilter.getTokenFromRequest())
-                                        .map(userDto -> {
-                                            cartDto.setUserDto(userDto);
-                                            return cartDto;
-                                        })
-                                        .onErrorResume(throwable -> {
-                                            log.error("Error fetching user info: {}", throwable.getMessage());
-                                            return Mono.just(cartDto);
-                                        })
-                        )
-                        .collectList()
-                        .map(resultList -> new PageImpl<>(resultList, pageable, resultList.size()))
-                );
-    }
-
-    @Override
-    public Mono<CartDto> findById(Integer cartId) {
-        log.info("CartDto, service; fetch cart by id");
-
-        return Mono.fromSupplier(() -> cartRepository.findById(cartId)
-                        .map(CartMappingHelper::map)
-                        .orElseThrow(() -> new CartNotFoundException(String.format("Cart with id: %d not found", cartId)))
-                )
-                .flatMap(cartDto ->
-                        callAPI.receiverUserDto(cartDto.getUserDto().getId(), JwtTokenFilter.getTokenFromRequest())
+                        .flatMap(cartDto -> callAPI
+                                .receiverUserDto(cartDto.getUserDto().getId(), JwtTokenFilter.getTokenFromRequest())
                                 .map(userDto -> {
                                     cartDto.setUserDto(userDto);
                                     return cartDto;
@@ -109,9 +81,30 @@ public class CartServiceImpl implements CartService {
                                 .onErrorResume(throwable -> {
                                     log.error("Error fetching user info: {}", throwable.getMessage());
                                     return Mono.just(cartDto);
-                                })
-                );
+                                }))
+                        .collectList()
+                        .map(resultList -> new PageImpl<>(resultList, pageable, resultList.size())));
     }
+
+    @Override
+    public Mono<CartDto> findById(Integer cartId) {
+        log.info("CartDto, service; fetch cart by id");
+
+        return Mono.fromSupplier(() -> cartRepository.findById(cartId)
+                .map(CartMappingHelper::map)
+                .orElseThrow(() -> new CartNotFoundException(String.format("Cart with id: %d not found", cartId))))
+                .flatMap(cartDto -> callAPI
+                        .receiverUserDto(cartDto.getUserDto().getId(), JwtTokenFilter.getTokenFromRequest())
+                        .map(userDto -> {
+                            cartDto.setUserDto(userDto);
+                            return cartDto;
+                        })
+                        .onErrorResume(throwable -> {
+                            log.error("Error fetching user info: {}", throwable.getMessage());
+                            return Mono.just(cartDto);
+                        }));
+    }
+    
 
     @Override
     public Mono<CartDto> save(final CartDto cartDto) {
@@ -131,10 +124,10 @@ public class CartServiceImpl implements CartService {
     public Mono<CartDto> update(final Integer cartId, final CartDto cartDto) {
         log.info("CartDto, service; update cart with cartId");
         return findById(cartId).flatMap(existingCartDto -> {
-                    modelMapper.map(cartDto, existingCartDto);
-                    return Mono.fromSupplier(() -> cartRepository.save(CartMappingHelper.map(existingCartDto)))
-                            .map(CartMappingHelper::map);
-                })
+            modelMapper.map(cartDto, existingCartDto);
+            return Mono.fromSupplier(() -> cartRepository.save(CartMappingHelper.map(existingCartDto)))
+                    .map(CartMappingHelper::map);
+        })
                 .switchIfEmpty(Mono.error(new CartNotFoundException("Cart with id " + cartId + " not found")));
     }
 

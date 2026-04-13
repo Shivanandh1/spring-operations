@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/productservice?useSSL=false
     username: root
-    password: ${MYSQL_PASSWORD:12042003}
+    password: ${MYSQL_PASSWORD:admin}
 
   jpa:
     show-sql: false

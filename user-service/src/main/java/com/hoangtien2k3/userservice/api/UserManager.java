@@ -79,7 +79,7 @@ public class UserManager {
         @ApiOperation(value = "Get user by username", notes = "Retrieve user information based on the provided username.")
         @GetMapping("/user")
         @PreAuthorize("(isAuthenticated() and (hasAuthority('USER') and principal.username == #username) or hasAuthority('ADMIN'))")
-        public Mono<ResponseEntity<?>> getUserByUsername(@RequestParam(value = "username") String username) {
+        public Mono<ResponseEntity<UserDto>> getUserByUsername(@RequestParam(value = "username") String username) {
                 return userService.findByUsername(username)
                                 .map(user -> modelMapper.map(user, UserDto.class))
                                 .map(userDto -> new ResponseEntity<>(userDto,
@@ -95,7 +95,7 @@ public class UserManager {
         })
         @GetMapping("/user/{id}")
         @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and principal.id == #id")
-        public Mono<ResponseEntity<?>> getUserById(@PathVariable("id") Long id) {
+        public Mono<ResponseEntity<UserDto>> getUserById(@PathVariable("id") Long id) {
                 return userService.findById(id)
                                 .map(user -> modelMapper.map(user, UserDto.class))
                                 .map(userDto -> new ResponseEntity<>(userDto,
@@ -123,7 +123,7 @@ public class UserManager {
                         @ApiResponse(code = 404, message = "User not found", response = ResponseEntity.class)
         })
         @GetMapping("/info")
-        public Mono<ResponseEntity<?>> getUserInfo(@RequestHeader("Authorization") String token) {
+        public Mono<ResponseEntity<UserDto>> getUserInfo(@RequestHeader("Authorization") String token) {
                 String username = jwtProvider.getUserNameFromToken(token);
                 return userService.findByUsername(username)
                                 .map(user -> modelMapper.map(user, UserDto.class))
